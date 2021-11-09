@@ -1,37 +1,118 @@
-# the java 코드를 조작하는 다양한 방법
-***
-## 1. JVM 이해
+# 자바 학습
+인프런 백기선님의 강의를 보고 참고 정리
+## 1. JVM
 ***
 ### 1.1 자바, JVM, JDK, JRE
+- JVM(Java Virtual Machine)
+  - 자바 가상머신
+  - 자바 바이트 코드(.class 파일)를 os 에 특화된 코드로 변환
+  - 특정 플랫폼에 종속적
+    - 네이티브 코드로 바꾸어야 하는데 특정 os에 맞춰서 실행해야 하기때문에
+  - 여러 벤더에 따라서 JVM의 구현이 가능하다.
+    - 오라클, 아마존 등
 
-- **JVM (Java Virtual Machine)**
-  - 자바 가상 머신으로 자바 바이트 코드(.class 파일)를 OS에 특화된 코드로
-  변환(인터프리터와 JIT 컴파일러)하여 실행한다.
-  - 바이트 코드를 실행하는 표준(JVM 자체는 표준)이자 구현체(특정 밴더가 구현한 JVM)다.
-  - JVM 스팩: https://docs.oracle.com/javase/specs/jvms/se11/html/
-  - JVM 밴더: 오라클, 아마존, Azul, ...
-  - 특정 플랫폼에 종속적.
-- **JRE (Java Runtime Environment): JVM + 라이브러리**
-  - 자바 애플리케이션을 실행할 수 있도록 구성된 배포판.
-  - JVM과 핵심 라이브러리 및 자바 런타임 환경에서 사용하는 프로퍼티 세팅이나 리소스
-  파일을 가지고 있다.
-  - 개발 관련 도구는 포함하지 않는다. (그건 JDK에서 제공)
-- **JDK (Java Development Kit): JRE + 개발 툴**
-  - JRE + 개발에 필요할 툴
-  - 소스 코드를 작성할 때 사용하는 자바 언어는 플랫폼에 독립적.
-  - 오라클은 자바 11부터는 JDK만 제공하며 JRE를 따로 제공하지 않는다.
+- JRE(Java Runtime Environment) -> 최소한의 배포단위
+  - JVM + 라이브러리
+  - 자바 어플리케이션 실행이 목적임
+  - 자바의 핵심 라이브러리, 프로퍼티 셋팅 등이 제공된다.
+  - 개발을 위한 개발 툴은 포함되어 있지 않다.
+
+- JDK(Java Development Kit)
+  - JRE + 개발 툴 (javac, javap 등)
+  - 자바 11버전부터 JDK 만 제공한다.
+    - JRE 는 역사속으로..
+  - 자바 9 부터 모듈 시스템이 사용되었고 모듈 시스템을 이용해 JRE 구성도 가능하다.
   - Write Once Run Anywhere
-- **자바**
-   - 프로그래밍 언어
-   - JDK에 들어있는 자바 컴파일러(javac)를 사용하여 바이트코드(.class 파일)로 컴파일 할
-    수 있다.
-   - 자바 유료화? 오라클에서 만든 Oracle JDK 11 버전부터 상용으로 사용할 때 유료.
-   - https://medium.com/@javachampions/java-is-still-free-c02aef8c9e04
-- **JVM 언어**
-   - JVM 기반으로 동작하는 프로그래밍 언어
-   - 클로저, 그루비, JRuby, Jython, Kotlin, Scala, ...
-- **참고**
-   - JIT 컴파일러: https://aboullaite.me/understanding-jit-compiler-just-in-time-compiler/
-   - JDK, JRE 그리고 JVM: https://howtodoinjava.com/java/basics/jdk-jre-jvm/
-   - https://en.wikipedia.org/wiki/List_of_JVM_languages
+
+- Java
+  - 프로그래밍 언어
+  - JDK에 있는 자바 컴파일러(javac)를 사용하여 바이트 코드(.class) 로 컴파일 할 수 있다.
+  - Oracle JDK 11 버전부터 상용으로 사용할 때 유료
+
+- JVM 언어
+  - JVM 기반으로 동장하는 프로그래밍 언어
+  - Kotlin, 그루비 등
+
+
+### 1.2 JVM 구조
+- 크게 4 개의 컴포넌트로 나뉘어있다.
+
+  - **클래스로더 시스템**
+    - 로딩
+      - 클래스를 읽어오는 과정
+    - 링크
+      - 레퍼런스 연결하는 과정
+    - 초기화
+      - static 값 초기화 및 변수 할당
+
+  - 메모리
+    - 전체 공유 자원
+      - 힙
+        - 객체 저장
+      - 메소드
+        - 클래스 수준 정보(클래스 이름, 부모 클래스 이름, 메소드, 변수) 저장
+
+    - 쓰레드 공유 자원
+      - 스택
+        - 스레드마다 런타임 스택을 만들고 메소드 호출 스택 프레임이라 부르는 블럭으로 쌓는다.
+        - 스레드 종료시 런타임 스택도 사라진다.
+      - PC(Program Counter)
+        - 쓰레드 마다 쓰레드 내 현재 실행할 스택 프레임을 가리키는 포인터 생성
+      - 네이티브 메소드 스택
+
+  - 실행엔진
+    - 인터프리터
+      - 바이트 코드를 한줄씩 실행
+    - JIT(Just In Time) 컴파일러
+      - 바이트코드 -> 네이티브 코드
+      - 인터프리터 효율을 높이기 위해 인터프리터가 반복되는 코드를 발견하면 JIT 컴파일러로 반복되는 코드를 모두 네이티브 코드로 바꾼다.
+      - 인터프리터는 네이티브 코드로 컴파일된 코드를 바로 사용함.
+    - GC(Garbage Collector)
+      - 더 이상 참조되지 않는 객체를 모아서 정리
+
+  - JNI(Java Native Interface)
+    - native 키워드가 붙은 Interface
+    - native 키워드를 사용한 메소드 호출
+    - 자바 어플리케이션에서 c, c++, 어셀블리로 작성된 함수를 사용할 수 있는 방법 제공
+
+  - 네이티브 메소드 라이브러리
+    - 항상 JNI 를 통해서 사용해야 한다.
+    - c, c++로 작성된 라이브러리
+
+
+### 1.3 클래스 로더
+- 로딩 -> 링크 -> 초기화 순서로 진행
+- 로딩(loading)
+  - 클래스를 읽어오는 과정
+  - Bootstrap -> Extension -> Application
+  - 클래스 로더가 .class 파일을 읽고 그 내용에 따라 적절한 바이너리 데이터를 만들고 메소드 영역에 저장
+  - 이떄 메소드 영역에 저장하는 데이터
+    - FQCN(Full Qualified Method Name) -> 풀 패키지 경로, 클래스 이름
+    - 클래스 | 인터페이스 | 이넘
+    - 메소드와 변수
+    - 로딩이 끝나면 해당 클래스 타입의 Class 객체를 생성하여 힙 영역에 저장함.
+
+
+- 링크 (linking)
+  - 레퍼런스(참조값) 연결하는 과정
+  - Verify -> Prepare -> Resolve
+    - 검증 -> .class 파일 형식이 유효한지 체크
+    - preparation -> 클래스 변후(static 변수)와 기본값에 필요한 메모리
+    - resolve -> 심볼릭 메모리 레퍼런스를 메소드 영역에 있는 실제 레퍼런스로 교체
+
+- 초기화 (initialization)
+  - static 값 초기화 및 변수 할당 (static 블럭이 있다면 이때 실행된다.)
+
+- 클래스 로더는 계층 구조로 이루어 져있으며 기본적으로 3가지 클래스 로더 제공
+  - 부트 스트랩 클래스 로더
+    - JAVA_HOME/lib 에 있는 코어 자바 API제공
+    - 최상위 우선순위를 가진 클래스 로더
+  - 플랫폼 클래스 로더(Extension)
+    - JAVA_HOME/lib/ext 폴더 또는 java.ext.dirs 시스템 변수에 해당하는 위치에 있는 클래스를 읽음
+  - 어플리케이션 클래스 로더
+    - 어플리케이션 클래스 패스(어플리케이션을 실행할 때 주는 -classpath 옵션 또는 java.class.path 환경 변수의 값에 해당하는 위치) 에서 클래스를 읽음
+    
+***
+
+
 
