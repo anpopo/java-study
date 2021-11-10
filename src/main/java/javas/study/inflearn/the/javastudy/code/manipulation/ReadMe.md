@@ -1,7 +1,7 @@
 # 자바 학습
 인프런 백기선님의 강의를 보고 참고 정리
-## 1. JVM
 ***
+## 1. JVM
 ### 1.1 자바, JVM, JDK, JRE
 - JVM(Java Virtual Machine)
   - 자바 가상머신
@@ -113,6 +113,43 @@
     - 어플리케이션 클래스 패스(어플리케이션을 실행할 때 주는 -classpath 옵션 또는 java.class.path 환경 변수의 값에 해당하는 위치) 에서 클래스를 읽음
     
 ***
+***
+## 2. 바이트 코드 조작
+### 2.1 코드 커버리지는 어떻게 측정할까
+- jacoco 같은 테스트코드 커버리지 툴은 어떻게 할까?
+  - 바이트 코드를 분석하고 조작하는 것이 핵심!
 
+### 2.2 모자에서 토끼를 꺼내는 마술
+- ASM: https://asm.ow2.io/
+- Javassist: https://www.javassist.org/
+- ByteBuddy: https://bytebuddy.net/#/  -> 추천
+  - 자바 클래스 파일 포맷에 대한 이해가 없어도 api의 사용법을 알면 쉽게 알 수 있다.
+
+### 2.3 javaagent 실습
+- 바이트 코드 조작을 위한 자바 에이전트 필요
+- 붙이는 방식은 시작시 붙이는 방식 premain 과 런타임 중에 동적으로 붙이는 방식 agentmain이 있다.
+- Instrumentation을 사용한다.
+- remain 메서드를 구현하면서 바이트 버디 라이브러리 사용
+- agent를 jar로 패킹징하면서 jar파일 안에 manifest 를 조작해 특정 값을 넣어준다.
+- Javaagent 붙여서 사용하기
+  - 클래스로더가 클래스를 읽어올 때 javaagent를 거쳐서 변경된 바이트코드를 읽어들여 사용.
+
+### 2.4 바이트코드 조작 정리
+- 프로그램 분석
+  - 코드에서 버그를 찾는 툴
+  - 코드 복잡도 계산
+- 클래스 파일 생성
+  - 프록시
+  - 특정 api 호출 접근 권한
+  - 스칼라 같은 언어의 컴파일러
+- 그 외 자바 소스 코드를 건드리지 않고 소스 코드 변경이 필요한 여러 경우에 사용 가능
+  - 프로파일링
+  - 최적화
+  - 로깅
+
+- 스프링이 컴포넌트 스캔(@ComponentScan)을 하는 방법(스프링은 asm 사용)
+  - 컴포넌트 스캔으로 빈으로 등록할 후보 클래스 정보를 찾는데 사용
+  - ClassPathScanningCandidateComponentProvider -> SimpleMetadataReader
+  - ClassReader와 Visitor 사용해서 클래스에 있는 메타 정보를 읽어온다. 
 
 
