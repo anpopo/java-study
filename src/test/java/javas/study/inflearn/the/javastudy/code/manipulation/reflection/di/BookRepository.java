@@ -1,0 +1,4 @@
+package javas.study.inflearn.the.javastudy.code.manipulation.reflection.di;
+
+public class BookRepository {
+}
