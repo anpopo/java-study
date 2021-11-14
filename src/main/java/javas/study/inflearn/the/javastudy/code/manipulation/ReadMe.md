@@ -1,5 +1,5 @@
 # 자바 학습
-인프런 백기선님의 강의를 보고 참고 정리
+인프런 백기선님의 강의를 보고 정리
 ***
 ## 1. JVM
 ### 1.1 자바, JVM, JDK, JRE
@@ -192,4 +192,42 @@
   - 스프링 aop
   - mokito
   - 하이버네이트 lazy loading..
+***
+***
+## 5. 어노테이션 프로세서
+### 5.1 롬복은 어떻게 동작하나
+- @Getter, @Setter, @Builder 등과 같이 어노테이션과 어노테이션 프로세서를 제공해 표준적으로 작성해야할 코드를 개발자 대신 작성해주는 멋진 라이브러맇ㅎㅎ아이러브
+- 롬복 동작 원리
+  - 프로세서가 제공하는 api로는 ast를 참조만 가능하지 수정은 하지 못한다.
+  - 컴파일 시점에 어노테이션 프로세서를 사용해 소스코드의 ast(abstract syntax tree)를 조작한다
+- 논란 거리
+  - 공개된 API(RoundEnvironment, TypeElement)가 아닌 컴파일러 내부 클래스를 사용하여 기존 소스 코드를 조작한다.
+  - 특히 이클립스의 경우엔 java agent를 사용하여 컴파일러 클래스까지 조작하여 사용한다. 해당 클래스들 역시 공개된 API가 아니다보니 버전 호환성에 문제가 생길 수 있고 언제라도 그런 문제가 발생해도 이상하지 않다.
+  - 그럼에도 불구하고 엄청난 편리함 때문에 널리 쓰이고 있으며 대안이 몇가지 있지만 롬복의 모든 기능과 편의성을 대체하진 못하는 현실이다.
+    - 대안 -> 정석 선택(추상 클래스를 만들면 추상클래스를 구현한 클래스를 만들어준다.)
+      - AutoValue
+      - Immutables
+
+### 5.2 어노테이션 프로세서 실습 1
+### 5.3 어노테이션 프로세서 실습 2
+### 어노테이션 프로세서 정리
+- 어노테이션 프로세서 사용 예제
+  - 롬복
+  - AutoService : java.util.ServiceLoader 용 파일 생성 유틸리티
+  - @Override
+    - ㅌhttps://stackoverflow.com/questions/18189980/how-do-annotations-like-overridework-internally-in-java/18202623
+  - Dragger2
+    - 컴파일 타임 DI 제공
+  - 안드로이드 라이브러리
+- 애노테이션 프로세서 장점
+  - 런타임 비용이 제로
+- 애노테이션 프로세서 단점
+  - 기존 클래스 코드를 변경할 때는 약간의 hack이 필요하다
+
+- JVM 구조
+- 바이트 코드 조작 - ASM 또는 Javassist, ByteBuddy
+- 리플렉션 API - 클래스 정보 참조 (메소드, 필드, 생성자, …)
+  - 성능의 병목 지점이 발생할 수 있으니 사용에 주의해야 함
+- 다이나믹 프록시 기법 - Proxy, CGlib, ByteBuddy
+- 애노테이션 프로세서 - AbstractProcessor, Filer, …, AutoService, Javapoet
 

@@ -1,6 +1,7 @@
 package javas.study;
 
 import javas.study.inflearn.the.javastudy.code.manipulation.Group;
+import javas.study.inflearn.the.javastudy.code.manipulation.annotationprocessor.Moja;
 import javas.study.inflearn.the.javastudy.code.manipulation.reflection.Book;
 import javas.study.inflearn.the.javastudy.code.manipulation.reflection.Car;
 import javas.study.inflearn.the.javastudy.code.manipulation.reflection.MyBook;
@@ -27,6 +28,7 @@ public class JavaStudyApplication {
 //		ClassLoader classLoader = JavaStudyApplication.class.getClassLoader();
 //		TypePool typePool = TypePool.Default.of(classLoader);
 //
+		// FullQualifiedClassName
 //		new ByteBuddy().redefine(typePool.describe("javas.study.inflearn.the.javastudy.code.manipulation.Group").resolve(), ClassFileLocator.ForClassLoader.of(classLoader))
 //				.method(named("pullOut")).intercept(FixedValue.value("Rabbit!!"))
 //				.make().saveIn(new File("/Users/ansehyeong/Project/private-project/java-study/build/classes/java/main"));
@@ -73,7 +75,7 @@ public class JavaStudyApplication {
 
 		System.out.println(MyBook.class.getSuperclass());
 
-		System.out.println("=====================modifier 를 이용한 접근제한자 확====================");
+		System.out.println("=====================modifier 를 이용한 접근제한자 확인====================");
 
 		Arrays.stream(Book.class.getDeclaredFields()).forEach(f -> {
 			int modifiers = f.getModifiers();
@@ -134,6 +136,12 @@ public class JavaStudyApplication {
 		Method d = Car.class.getMethod("d", int.class, int.class);
 		int invoke = (int) d.invoke(car, 1, 2);
 		System.out.println(invoke);
+
+		System.out.println("+=============================================================================");
+
+//		Moja moja = new MagicMoja();
+//
+//		System.out.println(moja.pullOut());
 	}
 
 }

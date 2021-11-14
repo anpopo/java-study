@@ -54,6 +54,12 @@ class ComputerServiceTest {
     }
 
 
+    /**
+     * 자바의 프록시 생성은 인터페이스만 가능하다.
+     * 그렇기 때문에 외부 라이브러리를 사용해 클래스 기반 프록시 객체를 생성 할 수 있다.
+     */
+
+
     @Test
     @DisplayName("다이나믹 프록시 - 외부 라이브러리 cglib 사용")
     public void dynamicProxy() {

@@ -23,6 +23,18 @@ dependencies {
 	// 다이나믹 클래스 생성을 위한 라이브러리
 	implementation group: 'cglib', name: 'cglib', version: '3.3.0'
 
+	// 마이 러브 프로젝트 롬복
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+
+
+	// 새로운 소스코드를 생성할 때 사용할 수 있는 api - javapoet
+	implementation group: 'com.squareup', name: 'javapoet', version: '1.13.0'
+
+
 
 }
 
@@ -61,17 +73,17 @@ jacocoTestCoverageVerification {
 		rule {
 			// 'element'가 없으면 프로젝트의 전체 파일을 합친 값을 기준으로 합니다.
 			// 위의 리포트에서 'Total'로 표시된 부분입니다.
-			limit {
-				// 'counter'를 지정하지 않으면 default는 'INSTRUCTION'
-				// 'value'를 지정하지 않으면 default는 'COVEREDRATIO'
-				minimum = 0.30
-			}
+//			limit {
+//				// 'counter'를 지정하지 않으면 default는 'INSTRUCTION'
+//				// 'value'를 지정하지 않으면 default는 'COVEREDRATIO'
+//				minimum = 0.10
+//			}
 		}
 
 		// 여러 룰을 생성할 수 있습니다.
 		rule {
 			// 룰을 간단히 켜고 끌 수 있습니다.
-			enabled = true
+			enabled = false
 
 			// 룰을 체크할 단위는 클래스 단위
 			element = 'CLASS'
@@ -101,7 +113,7 @@ jacocoTestCoverageVerification {
 			limit {
 				counter = 'BRANCH'
 				value = 'COVEREDRATIO'
-				minimum = 0.50
+				minimum = 0.10
 			}
 
 			// 커버리지 체크를 제외할 클래스들
