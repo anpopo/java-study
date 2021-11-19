@@ -1,6 +1,6 @@
 package javas.study.inflearn.java8.completablefuture;
 
-public class CompletableFutureApi {
+public class ConcurrentProgrammingApi {
 
     public static void main(String[] args) throws Exception{
 
