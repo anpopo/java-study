@@ -1,6 +1,5 @@
 package javas.study.book.modern.self.lambdaflow;
 
-import javas.study.book.modern.ch02.Predicate;
 import javas.study.book.modern.self.lambdaflow.predicate.StudentPredicate;
 
 import java.util.ArrayList;

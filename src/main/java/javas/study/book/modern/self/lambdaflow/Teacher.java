@@ -1,15 +1,17 @@
 package javas.study.book.modern.self.lambdaflow;
 
-public class Student {
+public class Teacher {
 
     private String name;
     private int age;
     private Gender gender;
+    private Subjects subjects;
 
-    public Student(String name, int age, Gender gender) {
+    public Teacher(String name, int age, Gender gender, Subjects subjects) {
         this.name = name;
         this.age = age;
         this.gender = gender;
+        this.subjects = subjects;
     }
 
     public String getName() {
@@ -22,5 +24,9 @@ public class Student {
 
     public Gender getGender() {
         return gender;
+    }
+
+    public Subjects getSubjects() {
+        return subjects;
     }
 }

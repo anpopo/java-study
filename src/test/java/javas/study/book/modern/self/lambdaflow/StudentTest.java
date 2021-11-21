@@ -2,6 +2,7 @@ package javas.study.book.modern.self.lambdaflow;
 
 import javas.study.book.modern.self.lambdaflow.predicate.StudentAgeOver15Predicate;
 import javas.study.book.modern.self.lambdaflow.predicate.StudentManPredicate;
+import javas.study.book.modern.self.lambdaflow.predicate.StudentPredicate;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,5 +44,26 @@ class StudentTest {
 
         Assertions.assertThat(students.size()).isEqualTo(5);
         Assertions.assertThat(students).extracting("name").containsExactly("test2", "test3", "test4", "test5", "test6");
+    }
+
+    @Test
+    void 익명클래스를_사용해_조건에_맞는_학생을_가져온다() {
+        List<Student> students = StudentFilter.filterStudent(studentList, new StudentPredicate() {
+            @Override
+            public boolean test(Student student) {
+                return student.getName().contains("1");
+            }
+        });
+
+        Assertions.assertThat(students.size()).isEqualTo(1);
+        Assertions.assertThat(students).extracting("name").containsExactly("test1");
+    }
+
+    @Test
+    void 람다_표현식을_사용해_조건에_맞는_학생을_가져온다() {
+        List<Student> students = StudentFilter.filterStudent(studentList, (Student s) -> s.getName().contains("1"));
+
+        Assertions.assertThat(students.size()).isEqualTo(1);
+        Assertions.assertThat(students).extracting("name").containsExactly("test1");
     }
 }
