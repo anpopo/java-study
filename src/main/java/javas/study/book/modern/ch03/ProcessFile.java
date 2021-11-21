@@ -14,7 +14,7 @@ public class ProcessFile {
 
     public void test() {
         try {
-            String result = processFile((BufferedReader br) -> br.readLine() + br.readLine());
+            String result = processFile(br -> br.readLine() + br.readLine());
         } catch (IOException e) {
             e.printStackTrace();
         }
