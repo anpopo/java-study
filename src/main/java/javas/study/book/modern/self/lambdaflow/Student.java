@@ -6,6 +6,18 @@ public class Student {
     private int age;
     private Gender gender;
 
+    public Student() {
+    }
+
+    public Student(int age) {
+        this.age = age;
+    }
+
+    public Student(int age, String name) {
+        this.age = age;
+        this.name = name;
+    }
+
     public Student(String name, int age, Gender gender) {
         this.name = name;
         this.age = age;
@@ -22,5 +34,19 @@ public class Student {
 
     public Gender getGender() {
         return gender;
+    }
+
+    public boolean isMan(Student student) {
+        return student.getGender().equals(Gender.MAN);
+    }
+
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", gender=" + gender +
+                '}';
     }
 }
