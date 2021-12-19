@@ -67,4 +67,23 @@ class MovieTest {
         Assertions.assertThat(movieName1).containsAll(movieName2);
     }
 
+    @Test
+    @DisplayName("중간 연산중 스트림의 lazy 한 특성 확인하기")
+    void lazyStreamTest() {
+        // filter, map, forEach 까지 다른 연산이지만 하나로 통합 - 루프 퓨전
+        movies.stream()
+                .filter(movie -> {
+                    System.out.println("filter : " + movie.getTitle());
+                    return movie.isOpen() && movie.getAge() >= 15;
+                })
+                .map(movie -> {
+                    System.out.println("map : " + movie.getTitle());
+                    return movie.getTitle();
+                })
+                .limit(3)
+                .forEach(System.out::println);
+
+
+    }
+
 }
