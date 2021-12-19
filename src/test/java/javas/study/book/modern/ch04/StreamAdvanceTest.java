@@ -19,22 +19,22 @@ public class StreamAdvanceTest {
     void setup() {
         movies = new ArrayList<>();
 
-        movies.add(new Movie("어바웃 타임", true, 12, Movie.Genre.ROMANTIC, Set.of(Movie.Cinema.MEGA_BOX)));
-        movies.add(new Movie("500일의 썸머", false, 12, Movie.Genre.ROMANTIC, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.LOTTE_CINEMA, Movie.Cinema.CGV)));
-        movies.add(new Movie("트랜스 포머", true, 12, Movie.Genre.ACTION, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.LOTTE_CINEMA, Movie.Cinema.CGV)));
-        movies.add(new Movie("어벤져스:엔드게임", false, 15, Movie.Genre.ACTION, Set.of(Movie.Cinema.LOTTE_CINEMA, Movie.Cinema.CGV)));
-        movies.add(new Movie("분노의 질주", false, 12, Movie.Genre.ACTION, Set.of(Movie.Cinema.CGV)));
-        movies.add(new Movie("해리포터와 아즈카반의 죄수", true, 15, Movie.Genre.FANTASY, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.CGV)));
-        movies.add(new Movie("반지의 제왕:두개의 탑", true, 12, Movie.Genre.FANTASY, Set.of(Movie.Cinema.LOTTE_CINEMA)));
-        movies.add(new Movie("신비한 동물사전", false, 12, Movie.Genre.FANTASY, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.LOTTE_CINEMA)));
-        movies.add(new Movie("나니아 연대기", true, 18, Movie.Genre.FANTASY, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.LOTTE_CINEMA, Movie.Cinema.CGV)));
-        movies.add(new Movie("월터의 상상은 현실이 된다", false, 12, Movie.Genre.FANTASY, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.LOTTE_CINEMA, Movie.Cinema.CGV)));
-        movies.add(new Movie("19곰 테드", false, 15, Movie.Genre.COMEDY, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.CGV)));
-        movies.add(new Movie("두사부일체", true, 18, Movie.Genre.COMEDY, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.LOTTE_CINEMA, Movie.Cinema.CGV)));
-        movies.add(new Movie("극한 직업", false, 12, Movie.Genre.COMEDY, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.LOTTE_CINEMA)));
-        movies.add(new Movie("범죄 도시", true, 18, Movie.Genre.ACTION, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.LOTTE_CINEMA, Movie.Cinema.CGV)));
-        movies.add(new Movie("코코", false, 15, Movie.Genre.ETC, Set.of(Movie.Cinema.LOTTE_CINEMA, Movie.Cinema.CGV)));
-        movies.add(new Movie("주토피아", true, 12, Movie.Genre.ETC, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.LOTTE_CINEMA, Movie.Cinema.CGV)));
+        movies.add(new Movie("어바웃 타임", true, 12, Movie.Genre.ROMANTIC, Set.of(Movie.Cinema.MEGA_BOX), 1_000_000));
+        movies.add(new Movie("500일의 썸머", false, 12, Movie.Genre.ROMANTIC, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.LOTTE_CINEMA, Movie.Cinema.CGV), 600_000));
+        movies.add(new Movie("트랜스 포머", true, 12, Movie.Genre.ACTION, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.LOTTE_CINEMA, Movie.Cinema.CGV), 800_000));
+        movies.add(new Movie("어벤져스:엔드게임", false, 15, Movie.Genre.ACTION, Set.of(Movie.Cinema.LOTTE_CINEMA, Movie.Cinema.CGV), 1_200_000));
+        movies.add(new Movie("분노의 질주", false, 12, Movie.Genre.ACTION, Set.of(Movie.Cinema.CGV), 600_000));
+        movies.add(new Movie("해리포터와 아즈카반의 죄수", true, 15, Movie.Genre.FANTASY, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.CGV), 900_000));
+        movies.add(new Movie("반지의 제왕:두개의 탑", true, 12, Movie.Genre.FANTASY, Set.of(Movie.Cinema.LOTTE_CINEMA), 1_000_000));
+        movies.add(new Movie("신비한 동물사전", false, 12, Movie.Genre.FANTASY, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.LOTTE_CINEMA), 1_500_000));
+        movies.add(new Movie("나니아 연대기", true, 18, Movie.Genre.FANTASY, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.LOTTE_CINEMA, Movie.Cinema.CGV), 800_000));
+        movies.add(new Movie("월터의 상상은 현실이 된다", false, 12, Movie.Genre.FANTASY, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.LOTTE_CINEMA, Movie.Cinema.CGV), 100_000));
+        movies.add(new Movie("19곰 테드", false, 15, Movie.Genre.COMEDY, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.CGV), 1_500_000));
+        movies.add(new Movie("두사부일체", true, 18, Movie.Genre.COMEDY, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.LOTTE_CINEMA, Movie.Cinema.CGV), 2_200_000));
+        movies.add(new Movie("극한 직업", false, 12, Movie.Genre.COMEDY, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.LOTTE_CINEMA), 1_100_000));
+        movies.add(new Movie("범죄 도시", true, 18, Movie.Genre.ACTION, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.LOTTE_CINEMA, Movie.Cinema.CGV), 3_100_000));
+        movies.add(new Movie("코코", false, 15, Movie.Genre.ETC, Set.of(Movie.Cinema.LOTTE_CINEMA, Movie.Cinema.CGV), 1_100_000));
+        movies.add(new Movie("주토피아", true, 12, Movie.Genre.ETC, Set.of(Movie.Cinema.MEGA_BOX, Movie.Cinema.LOTTE_CINEMA, Movie.Cinema.CGV), 900_000));
     }
 
 
@@ -225,6 +225,24 @@ public class StreamAdvanceTest {
                 .filter(movie -> movie.getPossibleCinema().contains(Movie.Cinema.LOTTE_CINEMA))
                 .findFirst()
                 .ifPresent(System.out::println);
+
+    }
+
+    @Test
+    @DisplayName("reducing - max / min")
+    void reducingMaxAndMinTest() {
+        // Optional 로 나오는 이유는 stream 요소가 비어 있을 수 있기 때문
+        Optional<Long> maxProductionCost = movies.stream()
+                .filter(movie -> movie.getPossibleCinema().contains(Movie.Cinema.MEGA_BOX) && movie.isOpen())
+                .map(Movie::getProductionCost)
+                .reduce(Math::max);
+
+        Optional<Long> minProductionCost = movies.stream()
+                .filter(movie -> movie.getPossibleCinema().contains(Movie.Cinema.MEGA_BOX) && movie.isOpen())
+                .map(Movie::getProductionCost)
+                .reduce(Math::min);
+
+        System.out.println(maxProductionCost.get() + "/" + minProductionCost.get());
 
     }
 

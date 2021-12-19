@@ -71,3 +71,9 @@
   - anyMatch(), allMatch(), noneMatch()
 - searching
   - findFirst(), findAny()
+
+
+### 3.5 리듀싱
+- 모든 스트림의 요소를 처리해서 값으로 도출하는 방법
+- 최대값과 최솟값
+

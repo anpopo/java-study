@@ -15,6 +15,7 @@ public class Movie {
     private final int age;
     private final Genre genre;
     private Set<Cinema> possibleCinema;
+    private final long productionCost;
 
     public enum Genre {ACTION, FANTASY, ROMANTIC, COMEDY, ETC}
 
