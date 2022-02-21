@@ -3,7 +3,7 @@ package javas.study.inflearn.not.inflear.udemy.thridcontrolflow;
 public class LastDigitChecker {
 
     public static boolean hasSameLastDigit (int a, int b, int c) {
-        if (isValid(a) || isValid(b) || isValid(c)) return false;
+        if (!isValid(a) || !isValid(b) || !isValid(c)) return false;
         int a2 = a % 10;
         int b2 = b % 10;
         int c2 = c % 10;
