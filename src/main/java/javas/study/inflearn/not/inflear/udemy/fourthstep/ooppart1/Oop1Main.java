@@ -8,9 +8,13 @@ public class Oop1Main {
 //        Car holden = new Car();
 //        porsche.setModel("Carrera");
 
-        Account sehyeongAccount = new Account();
-        sehyeongAccount.deposit(Double.MAX_VALUE);
+//        Account sehyeongAccount = new Account();
+//        sehyeongAccount.deposit(Double.MAX_VALUE);
+//        sehyeongAccount.withdrawal(1000d);
 
-        sehyeongAccount.withdrawal(1000d);
+        Animal animal = new Animal("Animal", 1, 1, 5, 5);
+        Dog dog = new Dog("Yorkie", 8, 20, 2, 4, 1, 20, "long silky");
+        dog.eat();
+
     }
 }
