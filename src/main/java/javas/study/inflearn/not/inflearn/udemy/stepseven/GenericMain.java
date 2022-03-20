@@ -28,6 +28,19 @@ public class GenericMain {
         gogochche1.addPlayer(ham);
 
 
+        System.out.println("------------------------------------------------------------------------------------");
+        League<FootballPlayer, Team<FootballPlayer>>footballLeague = new League<>("football league");
+        Team<FootballPlayer> footballTeam1 = new Team<>("team1");
+        Team<FootballPlayer> footballTeam2 = new Team<>("team2");
+        Team<FootballPlayer> footballTeam3 = new Team<>("team3");
+        Team<FootballPlayer> footballTeam4 = new Team<>("team4");
+
+        footballLeague.add(footballTeam1);
+        footballLeague.add(footballTeam2);
+        footballLeague.add(footballTeam3);
+        footballLeague.add(footballTeam4);
+
+        footballLeague.showLeagueTable();
     }
 
     private static void printDouble(ArrayList<Integer> items) {
