@@ -24,6 +24,11 @@ public class MapPractice {
             System.out.println("java is already in the map");
         }
 
+        languages.remove("java", "abcd");
+        languages.remove("lips");
+
+        languages.replace("basic", "super basic");
+
         System.out.println("=====================================================================================================================================");
 
         for (String key : languages.keySet()) {
