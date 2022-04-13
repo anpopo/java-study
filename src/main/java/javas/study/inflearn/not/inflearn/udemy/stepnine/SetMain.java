@@ -2,10 +2,7 @@ package javas.study.inflearn.not.inflearn.udemy.stepnine;
 
 import javas.study.inflearn.not.inflearn.udemy.stepnine.setpractice.HeavenlyBody;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class SetMain {
 
@@ -42,5 +39,42 @@ public class SetMain {
         for (HeavenlyBody moon : moons) {
             System.out.println("\t" + moon.getName());
         }
+
+        Set<Integer> squares = new HashSet<>();
+        Set<Integer> cubes = new HashSet<>();
+
+        for (int i = 1; i <= 100; i++) {
+            squares.add(i * i);
+            cubes.add(i * i * i);
+        }
+
+        Set<Integer> union = new HashSet<>(squares);
+
+        union.addAll(cubes);
+        System.out.println(union.size());
+
+
+        Set<Integer> intersection = new HashSet<>(squares);
+
+        intersection.retainAll(cubes);
+
+        System.out.println(intersection.size());
+
+
+        List<Integer> intersectionList = new ArrayList<>();
+        for (int i = 1; i <= 100; i++) {
+            intersectionList.add(i * i * i);
+        }
+
+        intersectionList.retainAll(squares);
+
+        Map<String, String> mapmap = new HashMap<>();
+
+        System.out.println("==============================");
+        for (Integer integer : intersectionList) {
+            System.out.println(integer);
+        }
+
+
     }
 }
