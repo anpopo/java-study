@@ -3,20 +3,32 @@ package javas.study.inflearn.not.inflearn.udemy.stepnine.setpractice;
 import java.util.HashSet;
 import java.util.Set;
 
-public class HeavenlyBody {
+public abstract class HeavenlyBody {
 
     private final String name;
     private final double orbitalPeriod;
     private final Set<HeavenlyBody> satellites;
 
-    public HeavenlyBody(String name, double orbitalPeriod) {
+    private final BodyTypes bodyType;
+
+    public enum BodyTypes {
+        STAR,
+        PLANET,
+        DWARF_PLANET,
+        MOON,
+        COMET,
+        ASTEROID
+    }
+
+    public HeavenlyBody(String name, double orbitalPeriod, BodyTypes bodyType) {
         this.name = name;
         this.orbitalPeriod = orbitalPeriod;
         this.satellites = new HashSet<>();
+        this.bodyType = bodyType;
     }
 
 
-    public boolean addMoon(HeavenlyBody moon) {
+    public boolean addSatellite(HeavenlyBody moon) {
         return this.satellites.add(moon);
     }
 
@@ -34,28 +46,33 @@ public class HeavenlyBody {
         return orbitalPeriod;
     }
 
+    public BodyTypes getBodyType() {
+        return bodyType;
+    }
 
     @Override
-    public boolean equals(Object obj) {
+    public final boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
 
-        if (obj == null || obj.getClass() != this.getClass()) {
-            return false;
-        }
-
         if (obj instanceof HeavenlyBody) {
-            String objName = (((HeavenlyBody) obj).getName());
-            return this.name.equals(objName);
+            HeavenlyBody theObject = (HeavenlyBody) obj;
+            if (this.name.equals(theObject.getName())) {
+                return this.bodyType == theObject.getBodyType();
+            }
         }
 
         return false;
     }
 
+    @Override
+    public final int hashCode() {
+        return this.name.hashCode() + this.bodyType.hashCode();
+    }
 
     @Override
-    public int hashCode() {
-        return this.name.hashCode() + 56;
+    public String toString() {
+        return this.name + ": " + this.bodyType + ", " + this.orbitalPeriod;
     }
 }

@@ -1,6 +1,7 @@
 package javas.study.inflearn.not.inflearn.udemy.stepnine;
 
 import javas.study.inflearn.not.inflearn.udemy.stepnine.setpractice.HeavenlyBody;
+import javas.study.inflearn.not.inflearn.udemy.stepnine.setpractice.Planet;
 
 import java.util.*;
 
@@ -11,22 +12,22 @@ public class SetMain {
 
 
     public static void main(String[] args) {
-        HeavenlyBody temp = new HeavenlyBody("Mercury", 88);
+        HeavenlyBody temp = new Planet("Mercury", 88);
         solarSystem.put(temp.getName(), temp);
         planets.add(temp);
 
-        temp = new HeavenlyBody("Venus", 225);
+        temp = new Planet("Venus", 225);
         solarSystem.put(temp.getName(), temp);
         planets.add(temp);
 
-        temp = new HeavenlyBody("Earth", 365);
+        temp = new Planet("Earth", 365);
         solarSystem.put(temp.getName(), temp);
         planets.add(temp);
 
 
-        HeavenlyBody tempMoon = new HeavenlyBody("Moon", 27);
+        HeavenlyBody tempMoon = new Planet("Moon", 27);
         solarSystem.put(tempMoon.getName(), tempMoon);
-        temp.addMoon(tempMoon);
+        temp.addSatellite(tempMoon);
 
 
         Set<HeavenlyBody> moons = new HashSet<>();
