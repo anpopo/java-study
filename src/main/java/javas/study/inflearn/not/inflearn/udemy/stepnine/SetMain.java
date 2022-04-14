@@ -13,20 +13,20 @@ public class SetMain {
 
     public static void main(String[] args) {
         HeavenlyBody temp = new Planet("Mercury", 88);
-        solarSystem.put(temp.getName(), temp);
+        solarSystem.put(temp.getKey().getName(), temp);
         planets.add(temp);
 
         temp = new Planet("Venus", 225);
-        solarSystem.put(temp.getName(), temp);
+        solarSystem.put(temp.getKey().getName(), temp);
         planets.add(temp);
 
         temp = new Planet("Earth", 365);
-        solarSystem.put(temp.getName(), temp);
+        solarSystem.put(temp.getKey().getName(), temp);
         planets.add(temp);
 
 
         HeavenlyBody tempMoon = new Planet("Moon", 27);
-        solarSystem.put(tempMoon.getName(), tempMoon);
+        solarSystem.put(tempMoon.getKey().getName(), tempMoon);
         temp.addSatellite(tempMoon);
 
 
@@ -38,7 +38,7 @@ public class SetMain {
         System.out.println("All Moons");
 
         for (HeavenlyBody moon : moons) {
-            System.out.println("\t" + moon.getName());
+            System.out.println("\t" + moon.getKey().getName());
         }
 
         Set<Integer> squares = new HashSet<>();
