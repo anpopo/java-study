@@ -1,7 +1,7 @@
 package javas.study.inflearn.not.inflearn.udemy.stepnine;
 
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class StockList {
@@ -9,7 +9,7 @@ public class StockList {
     private final Map<String, StockItem> list;
 
     public StockList() {
-        this.list = new HashMap<>();
+        this.list = new LinkedHashMap<>();
     }
 
     public int addStock(StockItem item) {
@@ -39,11 +39,21 @@ public class StockList {
     }
 
     public StockItem get(String key) {
-        return this.get(key);
+        return list.get(key);
     }
 
     public Map<String, StockItem> items() {
         return Collections.unmodifiableMap(list);
+    }
+
+    public Map<String, Double> priceList() {
+        Map<String, Double> prices = new LinkedHashMap<>();
+
+        for (Map.Entry<String, StockItem> item : list.entrySet()) {
+            prices.put(item.getKey(), item.getValue().getPrice());
+        }
+
+        return Collections.unmodifiableMap(prices);
     }
 
     @Override
@@ -58,7 +68,7 @@ public class StockList {
             double itemValue = value.getPrice() * value.quantityInStock();
 
             s = s + value + ". There are " + value.quantityInStock() + " in stock. Value of items: ";
-            s = s + itemValue + "\n";
+            s = s + String.format("%.2f", itemValue) + "\n";
             totalCost += itemValue;
         }
         return s + " Total stock value " + totalCost;
