@@ -1,7 +1,7 @@
 package javas.study.inflearn.not.inflearn.udemy.steptenio;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
@@ -26,16 +26,23 @@ public class Locations implements Map<Integer, Location> {
 
 
 
-        try (FileWriter locationFile = new FileWriter("locations.txt");
-             FileWriter directionFIle = new FileWriter("directions.txt")
-        ) {
+//        try (FileWriter locationFile = new FileWriter("locations.txt");
+//             FileWriter directionFIle = new FileWriter("directions.txt")
+//        ) {
+//
+//            for (Location location : locations.values()) {
+//                locationFile.write(location.getLocationId() + ", " + location.getDescription() + "\n");
+//
+//                for (String direction : location.getExits().keySet()) {
+//                    directionFIle.write(location.getLocationId() + ", " + direction + ", "+ location.getExits().get(direction)+ "\n");
+//                }
+//            }
+//        }
 
-            for (Location location : locations.values()) {
-                locationFile.write(location.getLocationId() + ", " + location.getDescription() + "\n");
-
-                for (String direction : location.getExits().keySet()) {
-                    directionFIle.write(location.getLocationId() + ", " + direction + ", + location.getExits().get(direction)" + "\n");
-                }
+        for (Map.Entry<Integer, Location> entry : locations.entrySet()) {
+            System.out.println(entry.getKey());
+            for (Map.Entry<String, Integer> entryExit : entry.getValue().getExits().entrySet()) {
+                System.out.println(entryExit.getKey() + ": " + entryExit.getValue());
             }
         }
     }
@@ -60,6 +67,36 @@ public class Locations implements Map<Integer, Location> {
 
         } finally {
             if (sc != null){
+                sc.close();
+            }
+        }
+
+        try {
+            sc = new Scanner(new BufferedReader(new FileReader("directions.txt")));
+            sc.useDelimiter(",");
+
+            while (sc.hasNextLine()) {
+//                int loc = sc.nextInt();
+//                sc.skip(sc.delimiter());
+//                String direction = sc.next().trim();
+//                sc.skip(sc.delimiter());
+//                String desc = sc.nextLine().trim();
+//                int destination = Integer.parseInt(desc);
+
+                String input  = sc.nextLine();
+                String[] data = input.split(", ");
+                int loc = Integer.parseInt(data[0]);
+                String direction = data[1];
+                int destination = Integer.parseInt(data[2]);
+
+                Location location = locations.get(loc);
+
+                location.addExit(direction, destination);
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (sc != null) {
                 sc.close();
             }
         }
