@@ -49,9 +49,7 @@ public class Locations implements Map<Integer, Location> {
 
     static {
 
-        Scanner sc = null;
-        try {
-            sc = new Scanner(new FileReader("locations.txt"));
+        try (Scanner sc = new Scanner(new FileReader("locations_big.txt"))) {
             sc.useDelimiter(",");
 
             while (sc.hasNextLine()) {
@@ -63,28 +61,20 @@ public class Locations implements Map<Integer, Location> {
                 Map<String, Integer> tempExits = new HashMap<>();
                 locations.put(loc, new Location(loc, description, tempExits));
             }
-        } catch (IOException e) {
+        } catch (IOException e) {}
 
-        } finally {
-            if (sc != null){
-                sc.close();
-            }
-        }
-
-        try {
-            sc = new Scanner(new BufferedReader(new FileReader("directions.txt")));
-            sc.useDelimiter(",");
-
-            while (sc.hasNextLine()) {
+        try(BufferedReader br  = new BufferedReader(new FileReader("directions_big.txt"))) {
+            String input ;
+            while ((input = br.readLine()) != null) {
 //                int loc = sc.nextInt();
 //                sc.skip(sc.delimiter());
 //                String direction = sc.next().trim();
 //                sc.skip(sc.delimiter());
 //                String desc = sc.nextLine().trim();
 //                int destination = Integer.parseInt(desc);
+//                String input  = sc.nextLine();
 
-                String input  = sc.nextLine();
-                String[] data = input.split(", ");
+                String[] data = input.split(",");
                 int loc = Integer.parseInt(data[0]);
                 String direction = data[1];
                 int destination = Integer.parseInt(data[2]);
@@ -95,10 +85,6 @@ public class Locations implements Map<Integer, Location> {
             }
         } catch(IOException e) {
             e.printStackTrace();
-        } finally {
-            if (sc != null) {
-                sc.close();
-            }
         }
 
 //        Map<String, Integer> tempExit = new HashMap<>();
